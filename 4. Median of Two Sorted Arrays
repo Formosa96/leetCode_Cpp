@@ -1,0 +1,53 @@
+class Solution {
+public:
+    void quickSort(vector<int>& vec, int low, int high)
+    {
+        if(low<high)
+        {
+            int p = partition(vec, low, high);
+            quickSort(vec, low, p - 1);
+            quickSort(vec, p + 1, high);
+        }
+    }
+    double partition(vector<int>& vec, int low, int high)
+    {
+        int i = low - 1;
+        
+        for(int j = low; j < high; j++)
+        {
+            if(vec[j] < vec[high])
+            {
+                i++;
+                swap(vec[j], vec[i]);
+            }
+        }
+        swap(vec[i+1], vec[high]);
+        
+        return i + 1;
+    }
+    double vectorMedian(vector<int>& vec)
+    {
+        int vSize = vec.size();
+        double result = 0;
+        
+            for(int i = 0; i < vec.size(); i++)
+        {
+            cout<<vec[i]<<" ";
+        }
+        cout<<endl;
+        if(vSize % 2 == 0)
+        {
+            return (vec[vSize / 2 - 1] + vec[vSize / 2]) / 2.0;
+        } else 
+        {
+            return vec[(vSize - 1) / 2];
+        }
+    }
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+
+        nums1.insert(nums1.end(), nums2.begin(), nums2.end());
+        quickSort(nums1, 0, (int)nums1.size() - 1);
+        return vectorMedian(nums1);
+
+    }
+};
